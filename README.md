@@ -17,17 +17,20 @@ Architecture:
 
 Packages and condistions needed:
 1. creat an account and an OpenAI api key in (https://platform.openai.com/api-keys) , and save they key in your local environment with name OPENAI_API_KEY. In the code, the key will be retrieved like this:
+
     import os
+   
     my_openai_api_key = os.getenv("OPENAI_API_KEY")
 
     from langchain_openai import ChatOpenAI
+   
     llm = ChatOpenAI(
           temperature=0, model="gpt-3.5-turbo", openai_api_key=my_openai_api_key, streaming=True
    )
    
-2. go to Openai your profile/billing, and deposit money there. Each OpenAI call costs ~1 cent in my case (with 10M data maximum), so I only deposited $10 there.
+3. go to Openai your profile/billing, and deposit money there. Each OpenAI call costs ~1 cent in my case (with 10M data maximum), so I only deposited $10 there.
    
-3. Install necessary packages
+4. Install necessary packages
 
    pip install langchain   
    pip install streamlit   
