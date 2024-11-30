@@ -37,5 +37,13 @@ Packages and condistions needed:
    pip install pandas
    
 5. How to run:
-   
+   5.1 For csv and any structured data pandas can process, you only need to run dataset.server under folder vectoring, for example, in pycharm Terminal (community version is good enough):
+       cd vectorizing
+       streamlit run .\dataset-server.py
+
+   a new URL will pop up. Current codes support upload 1 to 2 csv files; then raise questions on the uploaded files in the same URL. An example is shown below:
+
+     ![image](https://github.com/user-attachments/assets/c495570d-864c-44a1-b342-4385baec0f48)
+
+              
 
