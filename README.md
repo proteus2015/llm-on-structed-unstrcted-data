@@ -28,10 +28,11 @@ Packages and condistions needed:
 2. go to Openai your profile/billing, and deposit money there. Each OpenAI call costs ~1 cent in my case (with 10M data maximum), so I only deposited $10 there.
    
 3. Install necessary packages
-   pip install langchain
-   pip install streamlit
+
+   pip install langchain   
+   pip install streamlit   
    pip install pandas
    
-4. How to run:
+5. How to run:
    
 
