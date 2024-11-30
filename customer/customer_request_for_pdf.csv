@@ -1,0 +1,105 @@
+from langchain.agents.agent_types import AgentType
+from langchain_experimental.agents.agent_toolkits import create_pandas_dataframe_agent
+from langchain_openai import ChatOpenAI
+from langchain_openai import OpenAI
+## prompt and chain
+from langchain.prompts import PromptTemplate
+from langchain.chains import RetrievalQA
+
+import os
+import openai
+import uuid
+
+import pandas as pd
+import streamlit as sl
+
+## Text Splitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+## Pdf Loader
+from langchain_community.document_loaders import PyPDFLoader
+
+## import FAISS
+from langchain_community.vectorstores import FAISS
+
+from langchain_openai import OpenAIEmbeddings
+
+def get_unique_id():
+    return str(uuid.uuid4())
+
+my_openai_api_key = os.getenv("OPENAI_API_KEY")
+print("openAI key is correct")
+
+## load index
+def load_index():
+    vector_folder="../vectorizing/vectorstore"
+    return vector_folder
+
+def get_llm():
+    llm=ChatOpenAI(temperature=0, model="gpt-3.5-turbo", openai_api_key=my_openai_api_key, streaming=True)
+    return llm
+
+def get_response(llm,vectorstore, question ):
+    ## create prompt / template
+    prompt_template = """
+
+    Human: Please use the given context to provide concise answer to the question
+    If you don't know the answer, just say that you don't know, don't try to make up an answer.
+    <context>
+    {context}
+    </context>
+
+    Question: {question}
+
+    Assistant:"""
+
+    PROMPT = PromptTemplate(
+        template=prompt_template, input_variables=["context", "question"]
+    )
+
+    qa = RetrievalQA.from_chain_type(
+        llm=llm,
+        chain_type="stuff",
+        retriever=vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 5}),
+    return_source_documents=True,
+    chain_type_kwargs={"prompt": PROMPT})
+
+    answer=qa({"query":question})
+    return answer['result']
+
+
+def main():
+    sl.header("Customer UI for prompting questions")
+
+    vector_folder = load_index()
+
+    dir_list = os.listdir(vector_folder)
+    sl.write(f"Files and Directories in {vector_folder}")
+    sl.write(dir_list)
+
+
+    ## create index
+    embeddings = OpenAIEmbeddings()
+    faiss_index = FAISS.load_local(
+        index_name="pdfIndex",
+        folder_path=vector_folder,
+        embeddings=embeddings,
+        allow_dangerous_deserialization=True
+    )
+
+    sl.write("INDEX IS READY")
+    question = sl.text_input("Input your question")
+    if sl.button("Submit"):
+        with sl.spinner("Querying..."):
+            llm = get_llm()
+
+            # get_response
+            sl.write(get_response(llm, faiss_index, question))
+            sl.success("Complete")
+
+
+
+if __name__ == "__main__":
+    main()
+
+
