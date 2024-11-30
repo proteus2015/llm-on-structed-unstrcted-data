@@ -1,5 +1,5 @@
 # llm-on-structed-unstrcted-data
-Provide a context-aware Large Language Model (LLM) end-to-end solution with Retrieval Augmented Generation (RAG) on data health and analysis for unstructured data and structured data. The solution
+Provide a context-aware Large Language Model (LLM) end-to-end solution with Retrieval Augmented Generation (RAG) on data health and analysis for unstructured data and structured data. The solution (implemented in Python with Langchain, Streamlit, and other tools you need (I will cover in mext project)
 
           - understands and analyses text data as well as numeric data
           - only answers enterprise specified data related questions
@@ -9,10 +9,29 @@ Provide a context-aware Large Language Model (LLM) end-to-end solution with Retr
           - for unstructured data, Vectorizing with FAISS (Facebook Similarity Soluntion) is used to improve accuracy
           - Analysis results depend on internal enterprise data only (NO “general” results)
           - Results are updated when new data files are uploaded
+          - I use https://platform.openai.com/ for OpenAI support, but can change to other OpenAI supporter (AWS Bedrock, Databricks dataiku, etc.)
 
 Architecture:
 
 ![image](https://github.com/user-attachments/assets/b4d20b98-12ca-4225-b1bf-b33cba572a5f)
 
+Packages and condistions needed:
+1. creat an account and an OpenAI api key in (https://platform.openai.com/api-keys) , and save they key in your local environment with name OPENAI_API_KEY. In the code, the key will be retrieved like this:
+    import os
+    my_openai_api_key = os.getenv("OPENAI_API_KEY")
 
+    from langchain_openai import ChatOpenAI
+    llm = ChatOpenAI(
+          temperature=0, model="gpt-3.5-turbo", openai_api_key=my_openai_api_key, streaming=True
+   )
+   
+2. go to Openai your profile/billing, and deposit money there. Each OpenAI call costs ~1 cent in my case (with 10M data maximum), so I only deposited $10 there.
+   
+3. Install necessary packages
+   pip install langchain
+   pip install streamlit
+   pip install pandas
+   
+4. How to run:
+   
 
