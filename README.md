@@ -10,6 +10,9 @@ Provide a context-aware Large Language Model (LLM) end-to-end solution with Retr
           - Analysis results depend on internal enterprise data only (NO “general” results)
           - Results are updated when new data files are uploaded
 
+Architecture:
+
+![image](https://github.com/user-attachments/assets/b4d20b98-12ca-4225-b1bf-b33cba572a5f)
 
 
 
