@@ -1,4 +1,4 @@
-# llm-on-structed-unstrcted-data
+# llm-on-structed-unstrcted-data (series 1)
 Provide a context-aware Large Language Model (LLM) end-to-end solution with Retrieval Augmented Generation (RAG) on data health and analysis for unstructured data and structured data. The solution (implemented in Python with Langchain, Streamlit, and other tools you need (I will cover in mext project)
 
           - understands and analyses text data as well as numeric data
